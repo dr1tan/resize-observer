@@ -99,7 +99,7 @@ const addSmallText = () => {
 const addChildDiv = () => {
   if (observedElement.value) {
     const newElement = document.createElement("div");
-    newElement.textContent = "Neues Subtree-Element";
+    newElement.textContent = "Neues Child-Element";
     observedElement.value.appendChild(newElement);
 
     // Entferne das neue Element nach kurzer Zeit
@@ -137,7 +137,7 @@ onMounted(() => {
         triggerColorChange(mutationObserverColor)
       );
       mo.observe(observedElement.value, {
-        attributes: true,
+        // attributes: true,
         childList: true,
         subtree: true,
       });
