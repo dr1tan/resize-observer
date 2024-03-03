@@ -1,0 +1,86 @@
+Vue Use
+
+<template>
+  <div ref="observedElement">
+    Die Größe dieses Elements wird überwacht.
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
+
+const observedElement = ref(null);
+const { width, height } = useResizeObserver(observedElement);
+
+// 'width' und 'height' sind reaktive Referenzen, die sich automatisch aktualisieren, wenn die Größe des Elements sich ändert
+</script>
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+Standard ResizeObserver
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+
+const observedElement = ref(null);
+let resizeObserver;
+
+onMounted(() => {
+  resizeObserver = new ResizeObserver(entries => {
+    // Logik bei Größenänderung
+  });
+  resizeObserver.observe(observedElement.value);
+});
+
+onUnmounted(() => {
+  resizeObserver.disconnect();
+});
+</script>
+---------------------------------------------------------------------------------------------------------------------------------
+
+MutationObserver
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+
+const observedElement = ref(null);
+let mutationObserver;
+
+onMounted(() => {
+  mutationObserver = new MutationObserver(mutations => {
+    // Logik bei DOM-Änderungen
+  });
+  mutationObserver.observe(observedElement.value, { childList: true, subtree: true });
+});
+
+onUnmounted(() => {
+  mutationObserver.disconnect();
+});
+</script>
+---------------------------------------------------------------------------------------------------------------------------------
+
+Windows Resize Event 
+
+
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+
+const handleResize = () => {
+  // Logik bei Fenstergrößenänderung
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
+</script>
+
+
+
+
